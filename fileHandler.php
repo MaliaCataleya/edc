@@ -16,13 +16,17 @@ if (isset($_POST['upload'])) {
     if (in_array($fileActualExt, $allowed)) {
         if ($fileError === 0) {
             if ($fileSize < 1000000) {
-                if (file_exists('uploads/'.$fileName)) {
+                if (file_exists('/var/www/html/edc/uploads/'.$fileName)) {
                     echo "Datei existiert bereits!";
                 } else {
                     #$fileNameNew = uniqid('', true) . "." . $fileActualExt;
-                    $fileDestination = 'uploads/' . $fileName;
-                    move_uploaded_file($fileTmpName, $fileDestination);
-                    echo "Upload erfolgreich";
+                    $fileDestination = '/var/www/html/edc/uploads/' . $fileName;
+                    $didupload = move_uploaded_file($fileTmpName, $fileDestination);
+                    if ($didupload) {
+			echo "Upload erfolgreich";
+		    } else {
+			echo "Fehler";
+		    }
                 }
             } else {
                 echo "Die Datei ist zu groß!";
@@ -36,7 +40,7 @@ if (isset($_POST['upload'])) {
 }
 
 if (isset($_POST['show'])) {
-    if ($handle = opendir('uploads')) {
+    if ($handle = opendir('/var/www/html/edc/uploads')) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
                 echo "$entry\n";
