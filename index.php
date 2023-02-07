@@ -13,6 +13,7 @@
         <input type="text" name="filename" value="filename">
         <input type="text" name="downloadDir" value="Download Directory">
         <button type="download" name="download">Download</button>
+	<button type="calc" name="calc">Calculate</button>
     </form>
     <iframe frameborder="0" name="myIframe"></iframe>
 </body>

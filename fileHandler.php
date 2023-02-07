@@ -16,11 +16,11 @@ if (isset($_POST['upload'])) {
     if (in_array($fileActualExt, $allowed)) {
         if ($fileError === 0) {
             if ($fileSize < 1000000) {
-                if (file_exists('/var/www/html/edc/uploads/'.$fileName)) {
+                if (file_exists('/var/www/html/implementations/edc/uploads/'.$fileName)) {
                     echo "Datei existiert bereits!";
                 } else {
                     #$fileNameNew = uniqid('', true) . "." . $fileActualExt;
-                    $fileDestination = '/var/www/html/edc/uploads/' . $fileName;
+                    $fileDestination = '/var/www/html/implementations/edc/uploads/' . $fileName;
                     $didupload = move_uploaded_file($fileTmpName, $fileDestination);
                     if ($didupload) {
 			echo "Upload erfolgreich";
@@ -40,7 +40,7 @@ if (isset($_POST['upload'])) {
 }
 
 if (isset($_POST['show'])) {
-    if ($handle = opendir('/var/www/html/edc/uploads')) {
+    if ($handle = opendir('/var/www/html/implementations/edc/uploads')) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
                 echo "$entry\n";
@@ -53,10 +53,19 @@ if (isset($_POST['show'])) {
 if (isset($_POST['download'])) {
     if (isset($_POST['filename']) && $_POST['filename'] != '' && isset($_POST['downloadDir']) && $_POST['downloadDir'] != '') {
         $fileNameDownload = $_POST['filename'];
-        $fileURL = 'uploads/' . $fileNameDownload;
+        $fileURL = '/var/www/html/implementations/edc/uploads/' . $fileNameDownload;
         $downloadDestination = $_POST['downloadDir'] . '\\' . $fileNameDownload;
 
         file_put_contents($downloadDestination, file_get_contents($fileURL));
         echo "Download erfolgreich!";
     }
 }
+if (isset($_POST['dowload'])) {
+    if (isset($_POST['filename'])) {
+	$fmu = $_POST['filename'];
+	$command = escapeshellcmd("/var/www/html/implementations/edc/test_import.py");
+	$output = shell_exec($command);
+	echo $output;
+	}
+    }
+?>

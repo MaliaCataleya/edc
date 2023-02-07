@@ -5,11 +5,13 @@ Created on Mon Oct 17 06:25:01 2022
 @author: SAMAUFF
 """
 
+#!/bin python
+
 import fmipp
 import os
 
-work_dir = "C:\test"
-fmu_name = "cs_bouncingBall.fmu"
+work_dir = "/var/www/html/implementations/edc/uploads/" #maybe delete #
+fmu_name = "bouncingBall.fmu"
 model_name = "bouncingBall.mdl"
 path_to_fmu = os.path.join(work_dir, fmu_name)
 print("path fmu: ", path_to_fmu)
@@ -23,10 +25,10 @@ print("fmu: ", fmu)
 
 status = fmu.instantiate("my_test_model_1", 0., False, False)
 print("status1: ", status)
- 
+
 status = fmu.initialize(0.0, True, 2.5)
 print("status2: ", status)
-    
+
 time = 0
 stepsize = 0.5
 
